@@ -392,8 +392,8 @@ function getFalsyValuesCount(arr) {
  *    [ null, undefined, null ], null => 2
  *    [ true, 0, 1, 'true' ], true => 1
  */
-function findAllOccurrences(/* arr, item */) {
-  throw new Error('Not implemented');
+function findAllOccurrences(arr, item) {
+  return arr.filter((el) => el === item).length;
 }
 
 /**
@@ -407,8 +407,8 @@ function findAllOccurrences(/* arr, item */) {
  *    [1, 2, 3, 4, 5]                   => '1,2,3,4,5'
  *    ['rock', 'paper', 'scissors']     => 'rock,paper,scissors'
  */
-function toStringList(/* arr */) {
-  throw new Error('Not implemented');
+function toStringList(arr) {
+  return arr.join(',');
 }
 
 
@@ -438,8 +438,8 @@ function toStringList(/* arr */) {
  *      { country: 'Russia',  city: 'Saint Petersburg' }
  *    ]
  */
-function sortCitiesArray(/* arr */) {
-  throw new Error('Not implemented');
+function sortCitiesArray(arr) {
+  return arr.sort((a, b) => `${a.country}${a.city}`.localeCompare(`${b.country}${b.city}`));
 }
 
 /**
@@ -460,8 +460,21 @@ function sortCitiesArray(/* arr */) {
  *           [0,0,0,1,0],
  *           [0,0,0,0,1]]
  */
-function getIdentityMatrix(/* n */) {
-  throw new Error('Not implemented');
+function getIdentityMatrix(n) {
+  const arr = new Array(n ** 2).fill(0);
+
+  return arr.reduce((arrays, el, idx) => {
+    if (idx % n === 0) {
+      arrays.push([]);
+    }
+
+    if (arrays.length - 1 === arrays[arrays.length - 1].length) {
+      arrays[arrays.length - 1].push(1);
+    } else {
+      arrays[arrays.length - 1].push(el);
+    }
+    return arrays;
+  }, []);
 }
 
 /**
