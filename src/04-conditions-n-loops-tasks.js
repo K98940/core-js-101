@@ -294,10 +294,12 @@ function isCreditCardNumber(ccn) {
  *   10000 ( 1+0+0+0+0 = 1 ) => 1
  *   165536 (1+6+5+5+3+6 = 26,  2+6 = 8) => 8
  */
-function getDigitalRoot(/* num */) {
-  throw new Error('Not implemented');
+function getDigitalRoot(num) {
+  const getSumDigits = (n) => (n < 10
+    ? n
+    : getSumDigits([...n.toString(10)].reduce((s, d) => s + +d, 0)));
+  return getSumDigits(num);
 }
-
 
 /**
  * Returns true if the specified string has the balanced brackets and false otherwise.
@@ -420,10 +422,38 @@ function getMatrixProduct(/* m1, m2 */) {
  *    [    ,   ,    ]]
  *
  */
-function evaluateTicTacToePosition(/* position */) {
-  throw new Error('Not implemented');
-}
+function evaluateTicTacToePosition(position) {
+  const win = position.length;
 
+  const getWinRow = (arr) => arr.map((r) => r
+    .filter((e, _, a) => e && e === a[0]))
+    .filter((e) => e.length === win)[0];
+
+  const getWinDiagonal = (arr) => arr
+    .map((r, i) => r[i])
+    .filter((e, _, a) => e === a[0]);
+
+  const getWin = (array) => {
+    const winRow = getWinRow(array);
+    if (winRow && winRow.length === win) {
+      return winRow[0];
+    }
+
+    const diagonal = getWinDiagonal(array);
+    if (diagonal && diagonal.length === win) {
+      return diagonal[0];
+    }
+    return undefined;
+  };
+
+  let result = getWin(position);
+  if (result) return result;
+
+  const invert = position.map((_, i) => position.map((row) => row[i]).reverse());
+  result = getWin(invert);
+  if (result) return result;
+  return undefined;
+}
 
 module.exports = {
   getFizzBuzz,
