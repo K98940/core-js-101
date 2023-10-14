@@ -322,8 +322,41 @@ function getDigitalRoot(num) {
  *   '{)' = false
  *   '{[(<{[]}>)]}' = true
  */
-function isBracketsBalanced(/* str */) {
-  throw new Error('Not implemented');
+function isBracketsBalanced(str) {
+  const bracketsConfig = [['[', ']'], ['(', ')'], ['{', '}'], ['<', '>']];
+  const stack = [];
+
+  try {
+    [...str].forEach((bracket) => {
+      bracketsConfig.forEach((config) => {
+        const openBracket = config[0];
+        const closeBracket = config[1];
+        const lastInStack = stack.length - 1;
+        const isCloseBracket = bracket === closeBracket;
+        const isCorrectOpenBracket = stack[lastInStack] === openBracket;
+        const isSameBrackets = stack[lastInStack] === closeBracket;
+
+        if (bracket === openBracket) {
+          if (isSameBrackets) {
+            stack.pop();
+          } else {
+            stack.push(bracket);
+          }
+        } else if (isCloseBracket) {
+          if (stack.length === 0) {
+            throw new Error();
+          }
+          if (isCorrectOpenBracket) {
+            stack.pop();
+          }
+        }
+      });
+    });
+  } catch (error) {
+    return false;
+  }
+
+  return stack.length === 0;
 }
 
 
@@ -364,8 +397,30 @@ function toNaryString(/* num, n */) {
  *   ['/web/assets/style.css', '/.bin/mocha',  '/read.me'] => '/'
  *   ['/web/favicon.ico', '/web-scripts/dump', '/verbalizer/logs'] => '/'
  */
-function getCommonDirectoryPath(/* pathes */) {
-  throw new Error('Not implemented');
+function getCommonDirectoryPath(pathes) {
+  const len = pathes[0].length;
+  const countPathes = pathes.length;
+  let commonPath = '';
+
+  const normalizePath = (path) => {
+    const index = path.lastIndexOf('/');
+    if (index !== -1) {
+      return path.slice(0, index + 1);
+    }
+    return path;
+  };
+
+  for (let i = 0; i < len; i += 1) {
+    const sample = pathes[0][i];
+
+    for (let j = 0; j < countPathes; j += 1) {
+      if (pathes[j][i] !== sample) {
+        return normalizePath(commonPath);
+      }
+    }
+    commonPath += sample;
+  }
+  return normalizePath(commonPath);
 }
 
 
@@ -387,10 +442,22 @@ function getCommonDirectoryPath(/* pathes */) {
  *                         [ 6 ]]
  *
  */
-function getMatrixProduct(/* m1, m2 */) {
-  throw new Error('Not implemented');
-}
+function getMatrixProduct(m1, m2) {
+  const product = [];
+  const row = [];
 
+  for (let i = 0; i < m1.length; i += 1) {
+    for (let j = 0; j < m2[0].length; j += 1) {
+      let sum = 0;
+      for (let r = 0; r < m1[0].length; r += 1) {
+        sum += m1[i][r] * m2[r][j];
+      }
+      row[j] = sum;
+    }
+    product.push([...row]);
+  }
+  return product;
+}
 
 /**
  * Returns the evaluation of the specified tic-tac-toe position.
