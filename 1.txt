@@ -87,12 +87,11 @@
   [32m  √[0m[90m isCreditCardNumber should validate CCN[0m
   [32m  √[0m[90m getDigitalRoot should return the cyclic sum of all digits[0m
   [32m  √[0m[90m isBracketsBalanced should check the balanced brackets[0m
-  [36m  - toNaryString should return the n-ary string representation of number[0m
+  [32m  √[0m[90m toNaryString should return the n-ary string representation of number[0m
   [32m  √[0m[90m getCommonDirectoryPath should return a common path in the file system[0m
   [32m  √[0m[90m getMatrixProduct should return the product of two specified matrices[0m
   [32m  √[0m[90m evaluateTicTacToePosition should return the winner if defined[0m
 
 
-[92m [0m[32m 75 passing[0m[90m (41ms)[0m
-[36m [0m[36m 1 pending[0m
+[92m [0m[32m 76 passing[0m[90m (41ms)[0m
 
